@@ -9,14 +9,15 @@ chrome.runtime.onMessage.addListener(
                 "from the extension");
     if (request.contentScript == "Label button clicked") {
       sendResponse({backgroundScript: "Processed click!"});
-      writeRedditData(request.data.category)
+      writeRedditCommentData(request.data, sender.tab.url)
     }
   });
 
-function writeRedditData(data) {
-  console.log(data)
-  firebase.database().ref('comments/').set({
-    label: data
+function writeRedditCommentData(contentScriptData, url) {
+  firebase.database().ref('comments/' + Date.now()).set({
+    category: contentScriptData.category,
+    type: contentScriptData.redditContentType,
+    url: url
   });
 }
 
