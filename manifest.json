@@ -1,0 +1,35 @@
+{
+  "manifest_version": 2,
+  "name": "Firebase Auth in Chrome Extension Sample",
+  "description": "This sample shows how to authorize Firebase in a Chrome extension using a Google account.",
+  "version": "2.1",
+  "icons": {
+    "128": "images/firebase.png"
+  },
+  "browser_action": {
+    "default_icon": "images/firebase.png",
+    "default_popup": "popup/index.html"
+  },
+  "background": {
+    "page": "background/index.html"
+  },
+  "permissions": [
+    "identity"
+  ],
+  "content_scripts" : [
+    {
+      "matches": ["*://*.reddit.com/r/*"],
+      "css": ["content-scripts/style.css"],
+      "js": ["content-scripts/index.js"]
+    }
+  ],
+  "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://*.firebase.com https://code.jquery.com https://www.googleapis.com; object-src 'self'",
+  "oauth2": {
+    "client_id": "***REMOVED***",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "key": "***REMOVED***"
+}
