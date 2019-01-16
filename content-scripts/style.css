@@ -1,0 +1,15 @@
+.btn {
+    padding: 10px;
+}
+
+#yes {
+    background-color: green;
+}
+
+#maybe {
+    background-color: yellow;
+}
+
+#no {
+    background-color: blue;
+}
