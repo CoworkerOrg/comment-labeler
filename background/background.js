@@ -17,6 +17,8 @@ function writeRedditCommentData(contentScriptData, url) {
   firebase.database().ref('comments/' + Date.now()).set({
     category: contentScriptData.category,
     type: contentScriptData.redditContentType,
+    text: contentScriptData.text,
+    user: contentScriptData.user,
     url: url
   });
 }
