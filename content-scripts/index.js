@@ -1,4 +1,3 @@
-
 class Label {
   constructor(category, redditContentType, labelParentElement, labelParentElementIndex) {
       this.category = category;
@@ -7,43 +6,61 @@ class Label {
       this.labelParentElementIndex = labelParentElementIndex;
   }
 
-  createBtn(type) {
+  createBtn() {
    const btn = document.createElement("button")
    btn.className = "btn"
    btn.id = this.category
    btn.textContent = `${this.category} wage theft`
    const elementToLabel = this.labelParentElement[this.labelParentElementIndex]
-   elementToLabel.appendChild(btn)qq
+   elementToLabel.appendChild(btn)
    btn.addEventListener('click', this.sendToBackground.bind(this, this.category, this.redditContentType, elementToLabel), false)
   }
 
   sendToBackground(category, redditContentType, parentClassName) {
-    // move through the DOM to get comment or submission text by starting with the parent element to which we appended a button
-    const DOMstart = parentClassName.getElementsByClassName('s1ook3io-2')[0]
     chrome.runtime.sendMessage({
-      contentScript: "Label button clicked",
       data: {
         category: category,
         redditContentType: redditContentType,
-        user: getContent(DOMstart).user,
-        text: getContent(DOMstart).text
+        text: getContent(redditContentType, parentClassName).text,
+        user: getContent(redditContentType, parentClassName).user,
       }
     }, function(response) {
-      console.log(`${response.backgroundScript}`);
+      console.log(`response: ${response.backgroundScript}`);
     });
   }
 }
 
-// TODO: this only works for commenters, not submitters. Need to fix for these cases: submission post (as opposed to comment) and submitter responding in comments
-function getContent(DOMnode) {
-  const user = DOMnode.querySelectorAll('.s1461iz-1')[0].textContent
-  const postText = DOMnode.querySelectorAll('.s90z9tc-10')[0].textContent
-  return {user: user, text: postText}
-}
+function getContent(redditContentType, parentClassName) {
+    switch(redditContentType) {
+      case('comment'):
+        var user = parentClassName.querySelectorAll('.s1461iz-1')[0].textContent
+        const commentText = parentClassName.querySelectorAll('.s90z9tc-10')[0].textContent
+        return { 
+          user: user,
+          text: commentText
+        }
+      case('submission'):
+        var user = parentClassName.getElementsByClassName('_2tbHP6ZydRpjI44J3syuqC s1461iz-1')[0].textContent
+        const strippedUser = user.replace('u/', '')
+        const submissionTitle = parentClassName.getElementsByClassName('_1rcejqgj_laTEewtp2DbWG')[0].textContent
+        try {
+          var submissionText = parentClassName.getElementsByClassName('s69d4o1-6')[0].textContent
+        }
+        catch {
+          var submissionText = null
+        }
+        return {
+          user: strippedUser,
+          text: {
+            body: submissionText,
+            title: submissionTitle
+          }
+        }
+      }
+    }
 
 function appendBtnToClass(className, type) {
   const allElements = document.getElementsByClassName(className)
-
   for (let i=0; i < allElements.length; i++) {
     const yes = new Label('yes', type, allElements, i)
     const maybe = new Label('maybe', type, allElements, i)
