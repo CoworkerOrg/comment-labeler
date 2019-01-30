@@ -7,13 +7,19 @@ class Label {
   }
 
   createBtn() {
-   const btn = document.createElement("button")
-   btn.className = "btn"
-   btn.id = this.category
-   btn.textContent = `${this.category} wage theft`
-   const elementToLabel = this.labelParentElement[this.labelParentElementIndex]
-   elementToLabel.appendChild(btn)
-   btn.addEventListener('click', this.sendToBackground.bind(this, this.category, this.redditContentType, elementToLabel), false)
+     const btn = document.createElement("button")
+     btn.className = "btn"
+     btn.id = this.category.replace(/\s+/g, '').toLowerCase()
+     // btn.textContent = `${this.category}`
+     const elementToLabel = this.labelParentElement[this.labelParentElementIndex]
+     elementToLabel.appendChild(btn)
+     btn.addEventListener('mouseover', function(event) {
+        elementToLabel.classList.add('label-highlight')
+     })
+     btn.addEventListener('mouseout', function(event) {
+        elementToLabel.classList.remove('label-highlight')
+     })
+     btn.addEventListener('click', this.sendToBackground.bind(this, this.category, this.redditContentType, elementToLabel), false)
   }
 
   sendToBackground(category, redditContentType, parentClassName) {
@@ -35,7 +41,7 @@ function getContent(redditContentType, parentClassName) {
       case('comment'):
         var user = parentClassName.querySelectorAll('.s1461iz-1')[0].textContent
         const commentText = parentClassName.querySelectorAll('.s90z9tc-10')[0].textContent
-        return { 
+        return {
           user: user,
           text: commentText
         }
@@ -62,11 +68,13 @@ function getContent(redditContentType, parentClassName) {
 function appendBtnToClass(className, type) {
   const allElements = document.getElementsByClassName(className)
   for (let i=0; i < allElements.length; i++) {
-    const yes = new Label('yes', type, allElements, i)
-    const maybe = new Label('maybe', type, allElements, i)
-    const no = new Label('no', type, allElements, i)
-    yes.createBtn()
-    maybe.createBtn()
+    const scaleLow = new Label('Low', type, allElements, i)
+    const scaleMed = new Label('Med', type, allElements, i)
+    const scaleHigh = new Label('High', type, allElements, i)
+    const no = new Label('Not wage theft', type, allElements, i)
+    scaleLow.createBtn()
+    scaleMed.createBtn()
+    scaleHigh.createBtn()
     no.createBtn()
   }
 }

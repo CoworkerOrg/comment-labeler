@@ -1,15 +1,33 @@
 .btn {
-    padding: 10px;
+  height: 2rem;
+  min-width: 3rem;
+  border-radius: .3rem;
+  margin: .1rem;
 }
-
-#yes {
-    background-color: green;
+.btn:hover {
+  filter: brightness(85%);
 }
-
-#maybe {
-    background-color: yellow;
+.btn:focus {
+  outline: 0;
+  box-shadow: none;
 }
-
-#no {
-    background-color: blue;
+div.label-highlight {
+  background-color: #fafafa;
+  transition: none !important;
+  -moz-transition: none;
+  -webkit-transition: none;
+  -o-transition: all 0 none;
+}
+#low {
+  background: rgb(254, 240, 167);
+}
+#med {
+  background: rgb(250, 156, 88);
+}
+#high {
+  background: rgb(208, 56, 77);
+}
+#notwagetheft {
+  background: rgb(211,211,211);
+  margin-left: 1.2rem;
 }
