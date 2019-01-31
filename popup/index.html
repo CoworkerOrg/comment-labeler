@@ -3,7 +3,6 @@
 <head>
   <meta charset=utf-8 />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link rel="stylesheet" href="main.css"> -->
   <!-- Make sure you fetch the latest version of Firebase -->
   <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
   <!-- Firebase sign-in UI -->
@@ -20,10 +19,10 @@
 </head>
 <body>
   <h3>Firebase Authentication</h3>
+  <div id="firebase-user-details-container"></div>
   <div id="firebaseui-auth-container"></div>
   <div class="firebaseui-card-actions">
     <button id="firebase-signout" class="firebaseui-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored firebase">Signout</button>
   </div>
-  <div id="loader">Loading...</div>
 </body>
 </html>

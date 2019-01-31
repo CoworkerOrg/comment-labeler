@@ -2,9 +2,6 @@ var uiConfig = {
   callbacks: {
     signInSuccessWithAuthResult: function(authResult, redirectUrl) {
       return true;
-    },
-    uiShown: function() {
-      document.getElementById('loader').style.display = 'none';
     }
   },
   signInSuccessUrl: 'success.html',
@@ -13,8 +10,11 @@ var uiConfig = {
   ]
 };
 
-window.onload = function() {
-  firebase.initializeApp(firebaseConfig);
+function showSignedInUI(user) {
+  document.getElementById('firebase-user-details-container').textContent = user.email;
+}
+
+function startAuth() {
   var ui = new firebaseui.auth.AuthUI(firebase.auth());
   ui.start('#firebaseui-auth-container', uiConfig);
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
@@ -26,10 +26,21 @@ window.onload = function() {
     var errorMessage = error.message;
     console.log(error.code, error.message)
   });
-
-  const signout = document.getElementById('firebase-signout')
-  signout.addEventListener('click', function(event) {
-    console.log('clicked')
-    firebase.auth().signOut();
+}
+window.onload = function() {
+  firebase.initializeApp(firebaseConfig);
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      showSignedInUI(user)
+      const signout = document.getElementById('firebase-signout')
+      signout.addEventListener('click', function(event) {
+        firebase.auth().signOut();
+        document.getElementById('firebase-user-details-container').textContent = ''
+      })
+    } else {
+      startAuth()
+      const signout = document.getElementById('firebase-signout')
+      signout.style.display = 'none'
+    }
   })
 };
