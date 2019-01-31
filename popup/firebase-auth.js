@@ -26,4 +26,10 @@ window.onload = function() {
     var errorMessage = error.message;
     console.log(error.code, error.message)
   });
+
+  const signout = document.getElementById('firebase-signout')
+  signout.addEventListener('click', function(event) {
+    console.log('clicked')
+    firebase.auth().signOut();
+  })
 };
