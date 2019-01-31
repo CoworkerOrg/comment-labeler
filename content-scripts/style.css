@@ -3,6 +3,7 @@
   min-width: 3rem;
   border-radius: .3rem;
   margin: .1rem;
+  color: white;
 }
 .btn:hover {
   filter: brightness(85%);
@@ -18,16 +19,16 @@ div.label-highlight {
   -webkit-transition: none;
   -o-transition: all 0 none;
 }
-#low {
+#low-1 {
   background: rgb(254, 240, 167);
 }
-#med {
+#med-2 {
   background: rgb(250, 156, 88);
 }
-#high {
+#high-3 {
   background: rgb(208, 56, 77);
 }
-#notwagetheft {
+#no-0 {
   background: rgb(211,211,211);
   margin-left: 1.2rem;
 }

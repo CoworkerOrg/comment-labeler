@@ -12,10 +12,18 @@
   <script src="firebase-auth.js"></script>
   <!-- config vars -->
   <script type="text/javascript" src="../config.js"></script>
+  <style>
+  .mdl-button {
+    padding: 0px;
+  }
+  </style>
 </head>
 <body>
   <h3>Firebase Authentication</h3>
   <div id="firebaseui-auth-container"></div>
+  <div class="firebaseui-card-actions">
+    <button id="firebase-signout" class="firebaseui-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored firebase">Signout</button>
+  </div>
   <div id="loader">Loading...</div>
 </body>
 </html>

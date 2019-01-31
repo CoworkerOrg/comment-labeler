@@ -10,7 +10,7 @@ class Label {
      const btn = document.createElement("button")
      btn.className = "btn"
      btn.id = this.category.replace(/\s+/g, '').toLowerCase()
-     // btn.textContent = `${this.category}`
+     // btn.textContent = `${this.category.slice(-1)}`
      const elementToLabel = this.labelParentElement[this.labelParentElementIndex]
      elementToLabel.appendChild(btn)
      btn.addEventListener('mouseover', function(event) {
@@ -19,10 +19,11 @@ class Label {
      btn.addEventListener('mouseout', function(event) {
         elementToLabel.classList.remove('label-highlight')
      })
-     btn.addEventListener('click', this.sendToBackground.bind(this, this.category, this.redditContentType, elementToLabel), false)
+     btn.addEventListener('click', this.sendToBackground.bind(this, this.category.slice(-1), this.redditContentType, elementToLabel), false)
   }
 
   sendToBackground(category, redditContentType, parentClassName) {
+    console.log(category)
     chrome.runtime.sendMessage({
       data: {
         category: category,
@@ -31,7 +32,7 @@ class Label {
         user: getContent(redditContentType, parentClassName).user,
       }
     }, function(response) {
-      console.log(`response: ${response.backgroundScript}`);
+      alert(`${response.backgroundScript}`);
     });
   }
 }
@@ -68,10 +69,10 @@ function getContent(redditContentType, parentClassName) {
 function appendBtnToClass(className, type) {
   const allElements = document.getElementsByClassName(className)
   for (let i=0; i < allElements.length; i++) {
-    const scaleLow = new Label('Low', type, allElements, i)
-    const scaleMed = new Label('Med', type, allElements, i)
-    const scaleHigh = new Label('High', type, allElements, i)
-    const no = new Label('Not wage theft', type, allElements, i)
+    const scaleLow = new Label('Low-1', type, allElements, i)
+    const scaleMed = new Label('Med-2', type, allElements, i)
+    const scaleHigh = new Label('High-3', type, allElements, i)
+    const no = new Label('No-0', type, allElements, i)
     scaleLow.createBtn()
     scaleMed.createBtn()
     scaleHigh.createBtn()
