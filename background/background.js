@@ -1,7 +1,3 @@
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-var database = firebase.database()
-
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     try {
@@ -50,10 +46,12 @@ function writeRedditSubmissionData(contentScriptData, url) {
  */
 function initApp() {
   firebase.auth().onAuthStateChanged(function(user) {
-    console.log('User state change detected from the Background script of the Chrome Extension:', user);
+    console.log('User state change detected:', user);
   });
 }
 
 window.onload = function() {
+  firebase.initializeApp(firebaseConfig);
+  var database = firebase.database()
   initApp();
 };
