@@ -1,20 +1,20 @@
 {
   "manifest_version": 2,
-  "name": "Firebase Auth in Chrome Extension Sample",
-  "description": "This sample shows how to authorize Firebase in a Chrome extension using a Google account.",
-  "version": "2.1",
+  "name": "Comment Labeler",
+  "description": "Building a wage theft data set. By Coworker.org.",
+  "version": "0.1",
   "icons": {
-    "128": "images/firebase.png"
+    "128": "images/tag.png"
   },
   "browser_action": {
-    "default_icon": "images/firebase.png",
+    "default_icon": "images/tag.png",
     "default_popup": "popup/index.html"
   },
   "background": {
     "page": "background/index.html"
   },
   "permissions": [
-    "identity"
+    "identity", "tabs"
   ],
   "content_scripts" : [
     {

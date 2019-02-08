@@ -19,13 +19,7 @@ div.label-highlight {
   -webkit-transition: none;
   -o-transition: all 0 none;
 }
-#low-1 {
-  background: rgb(254, 240, 167);
-}
-#med-2 {
-  background: rgb(250, 156, 88);
-}
-#high-3 {
+#yes-1 {
   background: rgb(208, 56, 77);
 }
 #no-0 {
