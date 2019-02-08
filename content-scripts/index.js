@@ -69,18 +69,26 @@ function getContent(redditContentType, parentClassName) {
 function appendBtnToClass(className, type) {
   const allElements = document.getElementsByClassName(className)
   for (let i=0; i < allElements.length; i++) {
-    const scaleLow = new Label('Low-1', type, allElements, i)
-    const scaleMed = new Label('Med-2', type, allElements, i)
-    const scaleHigh = new Label('High-3', type, allElements, i)
-    const no = new Label('No-0', type, allElements, i)
-    scaleLow.createBtn()
-    scaleMed.createBtn()
-    scaleHigh.createBtn()
-    no.createBtn()
+    const option1 = new Label('Yes-1', type, allElements, i)
+    const option0 = new Label('No-0', type, allElements, i)
+    option1.createBtn()
+    option0.createBtn()
   }
 }
 
-const submissionsClassName = '_1KNG36IrXcP5X-eLQsMjZb'
-const commentsClassName = 'Comment'
-appendBtnToClass(submissionsClassName, 'submission')
-appendBtnToClass(commentsClassName, 'comment')
+function renderInterface() {
+  const submissionsClassName = '_1KNG36IrXcP5X-eLQsMjZb'
+  const commentsClassName = 'Comment'
+  appendBtnToClass(submissionsClassName, 'submission')
+  appendBtnToClass(commentsClassName, 'comment')
+}
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    switch(request.firebaseState) {
+      case('Signed in'):
+        renderInterface()
+        break
+    }
+  }
+)

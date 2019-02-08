@@ -27,7 +27,8 @@ function writeRedditCommentData(contentScriptData, url) {
     type: contentScriptData.redditContentType,
     text: contentScriptData.text,
     user: contentScriptData.user,
-    url: url
+    url: url,
+    labeler: firebase.auth().currentUser.email
   });
 }
 
@@ -37,21 +38,22 @@ function writeRedditSubmissionData(contentScriptData, url) {
     type: contentScriptData.redditContentType,
     text: contentScriptData.text,
     user: contentScriptData.user,
-    url: url
-  });
-}
-
-/**
- * https://github.com/firebase/quickstart-js/tree/master/auth/chromextension
- */
-function initApp() {
-  firebase.auth().onAuthStateChanged(function(user) {
-    console.log('User state change detected:', user);
+    url: url,
+    labeler: firebase.auth().currentUser.email
   });
 }
 
 window.onload = function() {
   firebase.initializeApp(firebaseConfig);
-  var database = firebase.database()
-  initApp();
-};
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log('User state change detected:', user)
+      chrome.tabs.query({url: '*://*.reddit.com/r/*'}, function(tabs) {
+        console.log(tabs)
+        tabs.forEach((tab) => chrome.tabs.sendMessage(tab.id, {firebaseState: 'Signed in'}))
+      })
+    } else {
+      console.log('No user')
+    }
+  });
+}
