@@ -23,7 +23,6 @@ class Label {
   }
 
   sendToBackground(category, redditContentType, parentClassName) {
-    console.log(category)
     chrome.runtime.sendMessage({
       data: {
         category: category,
@@ -32,7 +31,7 @@ class Label {
         user: getContent(redditContentType, parentClassName).user,
       }
     }, function(response) {
-      alert(`${response.backgroundScript}`);
+      console.log(`${response.backgroundScript}`);
     });
   }
 }
@@ -76,19 +75,39 @@ function appendBtnToClass(className, type) {
   }
 }
 
-function renderInterface() {
+function showInterface() {
   const submissionsClassName = '_1KNG36IrXcP5X-eLQsMjZb'
   const commentsClassName = 'Comment'
   appendBtnToClass(submissionsClassName, 'submission')
   appendBtnToClass(commentsClassName, 'comment')
 }
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    switch(request.firebaseState) {
-      case('Signed in'):
-        renderInterface()
-        break
-    }
+function hideInterface() {
+  const btns = document.getElementsByClassName('btn')
+  for (i=0; i < btns.length; i++) {
+    btns[i].style.display = 'none'
   }
-)
+}
+
+function toggleInterface(storageValue) {
+  if (storageValue === true) {
+    showInterface()
+  } else if (storageValue === false) {
+    hideInterface()
+  }
+}
+
+chrome.storage.local.get('loggedIn', (result) => {
+  for (var key in result) {
+    var val = result[key]
+  }
+  toggleInterface(val)
+})
+
+chrome.storage.onChanged.addListener((results) => {
+  for (var key in results) {
+    var storageChange = results[key]
+    var newVal = storageChange.newValue
+  }
+  toggleInterface(newVal)
+})

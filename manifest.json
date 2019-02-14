@@ -14,7 +14,7 @@
     "page": "background/index.html"
   },
   "permissions": [
-    "identity", "tabs"
+    "storage"
   ],
   "content_scripts" : [
     {

@@ -20,14 +20,15 @@ function startAuth() {
       console.log(error.code, error.message)
     });
 }
+
 window.onload = function() {
   const signout = document.getElementById('firebase-signout')
   const details = document.getElementById('firebase-user-details-container')
   firebase.initializeApp(firebaseConfig);
-  firebase.auth().onAuthStateChanged(function(user) {
+  firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       details.textContent = user.email
-      signout.addEventListener('click', function(event) {
+      signout.addEventListener('click', (event) => {
         firebase.auth().signOut();
         details.textContent = ''
       })
