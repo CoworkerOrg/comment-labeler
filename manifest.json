@@ -13,15 +13,15 @@
   "background": {
     "page": "background/index.html"
   },
-  "permissions": [
-    "identity", "tabs"
-  ],
   "content_scripts" : [
     {
       "matches": ["*://*.reddit.com/r/*/comments/*"],
       "css": ["content-scripts/style.css"],
       "js": ["content-scripts/index.js"]
     }
+  ],
+  "permissions": [
+    "storage"
   ],
   "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://*.firebase.com https://code.jquery.com https://www.googleapis.com; object-src 'self'",
   "oauth2": {

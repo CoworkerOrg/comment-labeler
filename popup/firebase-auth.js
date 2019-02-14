@@ -26,12 +26,14 @@ window.onload = function() {
   firebase.initializeApp(firebaseConfig);
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
+      chrome.storage.local.set({loggedIn: true})
       details.textContent = user.email
       signout.addEventListener('click', function(event) {
         firebase.auth().signOut();
         details.textContent = ''
       })
     } else {
+      chrome.storage.local.set({loggedIn: false})
       startAuth()
       signout.style.display = 'none'
     }

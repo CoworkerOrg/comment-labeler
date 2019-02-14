@@ -76,19 +76,52 @@ function appendBtnToClass(className, type) {
   }
 }
 
-function renderInterface() {
+function showInterface() {
   const submissionsClassName = '_1KNG36IrXcP5X-eLQsMjZb'
   const commentsClassName = 'Comment'
   appendBtnToClass(submissionsClassName, 'submission')
   appendBtnToClass(commentsClassName, 'comment')
 }
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    switch(request.firebaseState) {
-      case('Signed in'):
-        renderInterface()
-        break
-    }
+function hideInterface() {
+  const btns = document.getElementsByClassName('btn')
+  for (i=0; i < btns.length; i++) {
+    btns[i].style.display = 'none'
   }
-)
+}
+
+function toggleInterface(state) {
+  console.log('inside toggle', state)
+  if (state === true) {
+    showInterface()
+  }
+
+  if (state === false) {
+    hideInterface()
+  }
+
+}
+
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  for (var key in changes) {
+    var storageChange = changes[key]
+    var newVal = storageChange.newValue
+  }
+  toggleInterface(newVal)
+})
+
+// chrome.runtime.onMessage.addListener(
+//   function(request, sender, sendResponse) {
+//     if (request.ping) {
+//       sendResponse({pong: true});
+//       return;
+//     }
+//     switch(request.firebaseState) {
+//       case('Logged in'):
+//         toggleInterface(true)
+//         break
+//       case('Logged out'):
+//         toggleInterface(false)
+//         break
+//     }
+//   });
