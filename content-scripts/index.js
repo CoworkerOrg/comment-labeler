@@ -48,9 +48,9 @@ function getContent(redditContentType, parentClassName) {
       case('submission'):
         var user = parentClassName.getElementsByClassName('_2tbHP6ZydRpjI44J3syuqC s1461iz-1')[0].textContent
         const strippedUser = user.replace('u/', '')
-        const submissionTitle = parentClassName.getElementsByClassName('_1rcejqgj_laTEewtp2DbWG')[0].textContent
+        const submissionTitle = parentClassName.getElementsByClassName('s1okktje-0')[0].textContent
         try {
-          var submissionText = parentClassName.getElementsByClassName('s69d4o1-6')[0].textContent
+          var submissionText = parentClassName.getElementsByClassName('fo16tt-0')[0].textContent
         }
         catch {
           var submissionText = null
@@ -76,7 +76,9 @@ function appendBtnToClass(className, type) {
 }
 
 function showInterface() {
-  const submissionsClassName = '_1KNG36IrXcP5X-eLQsMjZb'
+  const subWrapper = document.querySelectorAll("div[data-test-id='post-content']")[0]
+  subWrapper.classList.add('cl-submission')
+  const submissionsClassName = 'cl-submission'
   const commentsClassName = 'Comment'
   appendBtnToClass(submissionsClassName, 'submission')
   appendBtnToClass(commentsClassName, 'comment')
